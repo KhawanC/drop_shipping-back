@@ -1,19 +1,23 @@
 package com.br.egypto.drop_shipping.entity;
 
-import java.util.List;
+import java.util.Collection;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "usuario")
-public class Usuario {
+public class Usuario implements UserDetails {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,16 +45,15 @@ public class Usuario {
 	@Column(name = "cpf", unique = true)
 	private String cpf;
 
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-	@Column(name = "id_endereco")
-	private List<Endereco> endereco;
+	@ManyToOne
+	@JoinColumn(name = "id_endereco", referencedColumnName = "id_endereco")
+	private Endereco endereco;
 
 	public Usuario() {
 	}
 
 	public Usuario(Integer id, Boolean isSuperUsuario, String nomeCompleto, Integer idade, String email, String senha,
-			String telefone, String cpf, List<Endereco> endereco) {
-		super();
+			String telefone, String cpf, Endereco endereco) {
 		this.id = id;
 		this.isSuperUsuario = isSuperUsuario;
 		this.nomeCompleto = nomeCompleto;
@@ -118,12 +121,16 @@ public class Usuario {
 		this.cpf = cpf;
 	}
 
-	public List<Endereco> getEndereco() {
+	public Endereco getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(List<Endereco> endereco) {
+	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public String getSenha() {
@@ -132,6 +139,41 @@ public class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return null;
+	}
+
+	@Override
+	public String getPassword() {
+		return this.senha;
+	}
+
+	@Override
+	public String getUsername() {
+		return this.email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 
 }

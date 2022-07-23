@@ -1,12 +1,13 @@
 package com.br.egypto.drop_shipping.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -41,16 +42,16 @@ public class Endereco {
 	@Column(name = "complemento")
 	private String complemento;
 
+	@OneToMany(mappedBy = "endereco")
 	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name = "id_usuario")
-	private Usuario usuario;
+	private List<Usuario> usuario;
 
 	public Endereco() {
 	}
 
 	public Endereco(Integer id, String cep, String estado, String cidade, String bairro, String rua, Integer numero,
-			String complemento, Usuario usuario) {
+			String complemento, List<Usuario> usuario) {
+		super();
 		this.id = id;
 		this.cep = cep;
 		this.estado = estado;
@@ -126,11 +127,11 @@ public class Endereco {
 		this.complemento = complemento;
 	}
 
-	public Usuario getUsuario() {
+	public List<Usuario> getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(List<Usuario> usuario) {
 		this.usuario = usuario;
 	}
 

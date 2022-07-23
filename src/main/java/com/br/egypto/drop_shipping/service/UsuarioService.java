@@ -3,6 +3,10 @@ package com.br.egypto.drop_shipping.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +17,9 @@ import com.br.egypto.drop_shipping.exceptions.NoSuchElementFoundException;
 import com.br.egypto.drop_shipping.exceptions.UsuarioException;
 import com.br.egypto.drop_shipping.repository.EnderecoRepository;
 import com.br.egypto.drop_shipping.repository.UsuarioRepository;
+import com.br.egypto.drop_shipping.security.AuthPedido;
+import com.br.egypto.drop_shipping.security.AuthResposta;
+import com.br.egypto.drop_shipping.security.JWTTokenUtil;
 
 @Service
 public class UsuarioService {
@@ -22,12 +29,15 @@ public class UsuarioService {
 
 	@Autowired
 	EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	AuthenticationManager authManager;
 
-	private final PasswordEncoder encoder;
-
-	public UsuarioService(PasswordEncoder encoder) {
-		this.encoder = encoder;
-	}
+	@Autowired
+	PasswordEncoder encoder;
+	
+	@Autowired
+	JWTTokenUtil jwtUtil;
 
 	public List<Usuario> findAllUsuarios() {
 		List<Usuario> listaUsuarios = usuarioRepository.findAll();
@@ -43,7 +53,7 @@ public class UsuarioService {
 		}
 	}
 
-	public Usuario saveUsuario(UsuarioLoginDTO usuarioDTO) throws Exception {
+	public Usuario saveUsuario(UsuarioLoginDTO usuarioDTO) throws UsuarioException {
 
 		usuarioDTO.setCpf(usuarioDTO.getCpf().replaceAll("[.-]", ""));
 		usuarioDTO.setTelefone(usuarioDTO.getTelefone().replaceAll("[()-]", ""));
@@ -59,12 +69,30 @@ public class UsuarioService {
 		} else if (!usuariosTelefone.isEmpty()) {
 			throw new UsuarioException("Esse telefone já foi registrado");
 		} else {
+			Endereco endereco = enderecoRepository.save(EnderecoDtoToEntity(usuarioDTO));
 			Usuario usuario = UsuarioDtoToEntity(usuarioDTO);
 			usuario.setSenha(encoder.encode(usuario.getSenha()));
+			usuario.setEndereco(endereco);
 			Usuario newUsuario = usuarioRepository.save(usuario);
-			Endereco endereco = EnderecoDtoToEntity(usuarioDTO, newUsuario);
-			enderecoRepository.save(endereco);
+			 
 			return newUsuario;
+		}
+	}
+	
+	public AuthResposta autenticarUsuario(AuthPedido usuarioDTO) throws Exception {
+		try {
+			List<Usuario> listUsuario = usuarioRepository.findByEmail(usuarioDTO.getEmail());
+			Usuario oldUsuario = listUsuario.get(0);
+			Authentication auth = authManager.authenticate(
+					new UsernamePasswordAuthenticationToken(usuarioDTO.getEmail(), usuarioDTO.getPassword()));
+			Usuario usuario = (Usuario) auth.getPrincipal();
+			String tokenAcesso = jwtUtil.gerarToken(usuario);
+			AuthResposta res = new AuthResposta(usuario.getEmail(), tokenAcesso);
+			return res;
+		} catch (BadCredentialsException e) {
+			throw new UsuarioException("Credências inválidas!");
+		} catch (IndexOutOfBoundsException e) {
+			throw new UsuarioException("Email não registrado!");
 		}
 	}
 
@@ -83,7 +111,7 @@ public class UsuarioService {
 		return usuario;
 	}
 
-	private Endereco EnderecoDtoToEntity(UsuarioLoginDTO usuarioDTO, Usuario usuario) {
+	private Endereco EnderecoDtoToEntity(UsuarioLoginDTO usuarioDTO) {
 
 		Endereco endereco = new Endereco();
 
@@ -94,7 +122,6 @@ public class UsuarioService {
 		endereco.setEstado(usuarioDTO.getEstado());
 		endereco.setNumero(usuarioDTO.getNumero());
 		endereco.setRua(usuarioDTO.getRua());
-		endereco.setUsuario(usuario);
 
 		return endereco;
 	}
