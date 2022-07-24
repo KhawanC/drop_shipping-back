@@ -1,6 +1,7 @@
 package com.br.egypto.drop_shipping.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -9,19 +10,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.br.egypto.drop_shipping.security.AuthPedido;
-import com.br.egypto.drop_shipping.service.UsuarioService;
+import com.br.egypto.drop_shipping.DTO.EmailConfirmacaoDTO;
+import com.br.egypto.drop_shipping.service.EmailService;
 
 @RestController
-@RequestMapping("/autenticacao")
+@RequestMapping("/email")
 //@CrossOrigin("*")
-public class AutenticacaoController {
+public class EmailController {
 	
 	@Autowired
-	UsuarioService usuarioService;
+	private EmailService emailService;
 	
 	@PostMapping
-	public ResponseEntity<?> login(@RequestBody AuthPedido login) throws Exception {
-		return new ResponseEntity<>(usuarioService.autenticarUsuario(login), HttpStatus.ACCEPTED);
+	public ResponseEntity<EmailConfirmacaoDTO> enviarEmail(@RequestBody EmailConfirmacaoDTO emailDTO) {
+		return new ResponseEntity<>(emailService.enviarEmailConfirmacao(emailDTO), HttpStatus.CREATED);
 	}
+
 }

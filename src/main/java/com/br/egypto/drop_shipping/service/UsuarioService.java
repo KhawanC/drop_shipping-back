@@ -29,13 +29,13 @@ public class UsuarioService {
 
 	@Autowired
 	EnderecoRepository enderecoRepository;
-	
+
 	@Autowired
 	AuthenticationManager authManager;
 
 	@Autowired
 	PasswordEncoder encoder;
-	
+
 	@Autowired
 	JWTTokenUtil jwtUtil;
 
@@ -56,6 +56,7 @@ public class UsuarioService {
 	public Usuario saveUsuario(UsuarioLoginDTO usuarioDTO) throws UsuarioException {
 
 		usuarioDTO.setCpf(usuarioDTO.getCpf().replaceAll("[.-]", ""));
+		usuarioDTO.setCep(usuarioDTO.getCep().replaceAll("[-]", ""));
 		usuarioDTO.setTelefone(usuarioDTO.getTelefone().replaceAll("[()-]", ""));
 
 		List<Usuario> usuariosCPF = usuarioRepository.findByCpf(usuarioDTO.getCpf());
@@ -74,11 +75,11 @@ public class UsuarioService {
 			usuario.setSenha(encoder.encode(usuario.getSenha()));
 			usuario.setEndereco(endereco);
 			Usuario newUsuario = usuarioRepository.save(usuario);
-			 
+
 			return newUsuario;
 		}
 	}
-	
+
 	public AuthResposta autenticarUsuario(AuthPedido usuarioDTO) throws Exception {
 		try {
 			List<Usuario> listUsuario = usuarioRepository.findByEmail(usuarioDTO.getEmail());
@@ -125,4 +126,5 @@ public class UsuarioService {
 
 		return endereco;
 	}
+
 }
