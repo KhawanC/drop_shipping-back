@@ -30,7 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	UsuarioSecurityRepository usuarioRepository;
 	
-	private String[] PUBLIC_GET = {"/swagger-ui/**", "/v3/api-docs/**"};
+	private String[] PUBLIC_GET = {"/swagger-ui/**", "/v3/api-docs/**", "/listaImagens", "/listaTexto", "/palavrasChaves", "/categoria/**", "/produto/**"};
 	
 	private String[] PUBLIC_POST = {"/autenticacao", "/usuario/cadastrarUsuario", "/email"};
 

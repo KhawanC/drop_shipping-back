@@ -33,7 +33,25 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		List<String> details = new ArrayList<>();
 		details.add(ex.getLocalizedMessage());
 		HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
-		ErrorResponse error = new ErrorResponse(httpStatus.value(), "Ocorreu um erro no cadastro do cliente", details);
+		ErrorResponse error = new ErrorResponse(httpStatus.value(), "Ocorreu um erro no cliente", details);
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(ProdutoException.class)
+	public final ResponseEntity<Object> handleClienteException(ProdutoException ex, WebRequest request) {
+		List<String> details = new ArrayList<>();
+		details.add(ex.getLocalizedMessage());
+		HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+		ErrorResponse error = new ErrorResponse(httpStatus.value(), "Ocorreu um erro no produto", details);
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(CategoriaException.class)
+	public final ResponseEntity<Object> handleClienteException(CategoriaException ex, WebRequest request) {
+		List<String> details = new ArrayList<>();
+		details.add(ex.getLocalizedMessage());
+		HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+		ErrorResponse error = new ErrorResponse(httpStatus.value(), "Ocorreu um erro na categoria", details);
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 
