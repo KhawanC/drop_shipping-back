@@ -52,4 +52,15 @@ public class JWTTokenUtil {
 		}
 	}
 	
+	public String getSubject(String token) {
+		return parseClaims(token).getSubject();
+	}
+	
+	private Claims parseClaims(String token) {
+		return Jwts.parser()
+				.setSigningKey(CHAVE_SECRETA)
+				.parseClaimsJws(token)
+				.getBody();
+	}
+	
 }

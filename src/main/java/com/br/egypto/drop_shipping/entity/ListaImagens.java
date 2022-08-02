@@ -21,8 +21,8 @@ public class ListaImagens {
 	@Column(name = "id_lista_imagens")
 	private Integer id;
 
-	@Column(name = "slot_1")
-	private String slot_1;
+	@Column(name = "slot")
+	private String[] slot;
 
 	@OneToMany(mappedBy = "listaImagens")
 	@JsonIgnore
@@ -35,9 +35,10 @@ public class ListaImagens {
 	public ListaImagens() {
 	}
 
-	public ListaImagens(Integer id, String slot_1, List<Categoria> categoria, List<Produto> produtos) {
+	public ListaImagens(Integer id, String[] slot, List<Categoria> categoria, List<Produto> produtos) {
+		super();
 		this.id = id;
-		this.slot_1 = slot_1;
+		this.slot = slot;
 		this.categoria = categoria;
 		this.produtos = produtos;
 	}
@@ -50,12 +51,12 @@ public class ListaImagens {
 		this.id = id;
 	}
 
-	public String getSlot_1() {
-		return slot_1;
+	public String[] getSlot() {
+		return slot;
 	}
 
-	public void setSlot_1(String slot_1) {
-		this.slot_1 = slot_1;
+	public void setSlot(String[] slot) {
+		this.slot = slot;
 	}
 
 	public List<Categoria> getCategoria() {

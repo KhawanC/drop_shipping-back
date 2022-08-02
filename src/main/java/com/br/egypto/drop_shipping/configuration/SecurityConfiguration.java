@@ -17,11 +17,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.br.egypto.drop_shipping.repository.UsuarioSecurityRepository;
+import com.br.egypto.drop_shipping.security.JWTTokenFilter;
 
 @EnableWebSecurity
 @Configuration
@@ -29,6 +31,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	UsuarioSecurityRepository usuarioRepository;
+	
+	@Autowired
+	JWTTokenFilter jwtTokenFilter;
 	
 	private String[] PUBLIC_GET = {"/swagger-ui/**", "/v3/api-docs/**", "/listaImagens", "/listaTexto", "/palavrasChaves", "/categoria/**", "/produto/**"};
 	
@@ -48,6 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.GET ,PUBLIC_GET).permitAll()
 			.antMatchers(HttpMethod.POST, PUBLIC_POST).permitAll()
 			.anyRequest().authenticated();
+		http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 	
 	@Bean

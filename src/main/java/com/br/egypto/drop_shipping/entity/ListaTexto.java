@@ -21,8 +21,8 @@ public class ListaTexto {
 	@Column(name = "id_lista_texto")
 	private Integer id;
 
-	@Column(name = "slot_1")
-	private String slot_1;
+	@Column(name = "slot")
+	private String[] slot;
 
 	@OneToMany(mappedBy = "categoria")
 	@JsonIgnore
@@ -31,9 +31,9 @@ public class ListaTexto {
 	public ListaTexto() {
 	}
 
-	public ListaTexto(Integer id, String slot_1, List<Produto> produtos) {
+	public ListaTexto(Integer id, String[] slot, List<Produto> produtos) {
 		this.id = id;
-		this.slot_1 = slot_1;
+		this.slot = slot;
 		this.produtos = produtos;
 	}
 
@@ -45,12 +45,12 @@ public class ListaTexto {
 		this.id = id;
 	}
 
-	public String getSlot_1() {
-		return slot_1;
+	public String[] getSlot() {
+		return slot;
 	}
 
-	public void setSlot_1(String slot_1) {
-		this.slot_1 = slot_1;
+	public void setSlot(String[] slot) {
+		this.slot = slot;
 	}
 
 	public List<Produto> getProdutos() {
