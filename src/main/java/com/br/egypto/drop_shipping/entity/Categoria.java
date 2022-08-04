@@ -32,6 +32,9 @@ public class Categoria {
 	@Column(name = "icone_home")
 	private String icone_home;
 
+	@Column(name = "total_cliques")
+	private Integer totalCliques;
+
 	@ManyToOne
 	@JoinColumn(name = "id_imagem", referencedColumnName = "id_lista_imagens")
 	private ListaImagens listaImagens;
@@ -47,12 +50,14 @@ public class Categoria {
 	public Categoria() {
 	}
 
-	public Categoria(Integer id, String nome, String link, String icone_home, ListaImagens listaImagens,
-			ListaPalavrasChaves listaPalavrasChaves, List<Produto> produtos) {
+	public Categoria(Integer id, String nome, String link, String icone_home, Integer totalCliques,
+			ListaImagens listaImagens, ListaPalavrasChaves listaPalavrasChaves, List<Produto> produtos) {
+		super();
 		this.id = id;
 		this.nome = nome;
 		this.link = link;
 		this.icone_home = icone_home;
+		this.totalCliques = totalCliques;
 		this.listaImagens = listaImagens;
 		this.listaPalavrasChaves = listaPalavrasChaves;
 		this.produtos = produtos;
@@ -112,6 +117,14 @@ public class Categoria {
 
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
+	}
+
+	public Integer getTotalCliques() {
+		return totalCliques;
+	}
+
+	public void setTotalCliques(Integer totalCliques) {
+		this.totalCliques = totalCliques;
 	}
 
 }

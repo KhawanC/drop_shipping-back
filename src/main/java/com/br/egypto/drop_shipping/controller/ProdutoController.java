@@ -8,10 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.br.egypto.drop_shipping.DTO.ClickDTO;
 import com.br.egypto.drop_shipping.DTO.ProdutoDTO;
 import com.br.egypto.drop_shipping.entity.Produto;
 import com.br.egypto.drop_shipping.service.ProdutoService;
@@ -33,7 +35,7 @@ public class ProdutoController {
 		return new ResponseEntity<>(produtoService.findById(id), HttpStatus.OK);
 	}
 	
-	@GetMapping("/{nomeCategoria}")
+	@GetMapping("/nomeCategoria/{nomeCategoria}")
 	public ResponseEntity<List<Produto>> findProdutoByCategoria(@PathVariable String nomeCategoria){
 		System.out.println(nomeCategoria);
 		return new ResponseEntity<>(produtoService.findByCategoria(nomeCategoria), HttpStatus.OK);
@@ -42,5 +44,11 @@ public class ProdutoController {
 	@PostMapping
 	public ResponseEntity<Produto> saveListaPalavrasChave(@RequestBody ProdutoDTO produto) {
 		return new ResponseEntity<>(produtoService.saveProduto(produto), HttpStatus.OK);
+	}
+	
+	@PutMapping("/click")
+	public ResponseEntity<String> clickProduto(@RequestBody ClickDTO click) {
+		produtoService.clickProdutoProducer(click);
+		return new ResponseEntity<>("Mensagem enviada com sucesso", HttpStatus.OK);
 	}
 }

@@ -30,6 +30,9 @@ public class Produto {
 	@Column(name = "prcnt_desconto")
 	private Integer prcntDesconto;
 
+	@Column(name = "total_cliques")
+	private Integer totalCliques;
+
 	@Column(name = "total_compras")
 	private Integer totalCompras;
 
@@ -52,14 +55,16 @@ public class Produto {
 	public Produto() {
 	}
 
-	public Produto(Integer id, String nome, String link, Double preco, Integer prcntDesconto, Integer totalCompras,
-			Categoria categoria, ListaImagens listaImagens, ListaPalavrasChaves listaPalavrasChaves,
-			ListaTexto listaTexto) {
+	public Produto(Integer id, String nome, String link, Double preco, Integer prcntDesconto, Integer totalCliques,
+			Integer totalCompras, Categoria categoria, ListaImagens listaImagens,
+			ListaPalavrasChaves listaPalavrasChaves, ListaTexto listaTexto) {
+		super();
 		this.id = id;
 		this.nome = nome;
 		this.link = link;
 		this.preco = preco;
 		this.prcntDesconto = prcntDesconto;
+		this.totalCliques = totalCliques;
 		this.totalCompras = totalCompras;
 		this.categoria = categoria;
 		this.listaImagens = listaImagens;
@@ -145,6 +150,14 @@ public class Produto {
 
 	public void setListaTexto(ListaTexto listaTexto) {
 		this.listaTexto = listaTexto;
+	}
+
+	public Integer getTotalCliques() {
+		return totalCliques;
+	}
+
+	public void setTotalCliques(Integer totalCliques) {
+		this.totalCliques = totalCliques;
 	}
 
 }

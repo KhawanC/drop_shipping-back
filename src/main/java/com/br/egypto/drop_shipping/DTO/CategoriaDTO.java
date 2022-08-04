@@ -8,19 +8,16 @@ public class CategoriaDTO {
 
 	private String icone_home;
 
-	private Integer idListaImagens;
-
 	private Integer idListaPalavrasChaves;
 
 	public CategoriaDTO() {
 	}
 
-	public CategoriaDTO(String nome, String link, String icone_home, Integer idListaImagens,
-			Integer idListaPalavrasChaves) {
+	public CategoriaDTO(String nome, String link, String icone_home, Integer idListaPalavrasChaves) {
+		super();
 		this.nome = nome;
 		this.link = link;
 		this.icone_home = icone_home;
-		this.idListaImagens = idListaImagens;
 		this.idListaPalavrasChaves = idListaPalavrasChaves;
 	}
 
@@ -46,14 +43,6 @@ public class CategoriaDTO {
 
 	public void setIcone_home(String icone_home) {
 		this.icone_home = icone_home;
-	}
-
-	public Integer getIdListaImagens() {
-		return idListaImagens;
-	}
-
-	public void setIdListaImagens(Integer idListaImagens) {
-		this.idListaImagens = idListaImagens;
 	}
 
 	public Integer getIdListaPalavrasChaves() {

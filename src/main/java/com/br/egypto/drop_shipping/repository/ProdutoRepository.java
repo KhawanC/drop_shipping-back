@@ -11,4 +11,5 @@ import com.br.egypto.drop_shipping.entity.Produto;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Integer>{
 	List<Produto> findByCategoria(Categoria categoria);
+	Produto findByLink(String link);
 }

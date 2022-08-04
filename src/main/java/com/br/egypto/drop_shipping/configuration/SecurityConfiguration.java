@@ -38,6 +38,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private String[] PUBLIC_GET = {"/swagger-ui/**", "/v3/api-docs/**", "/listaImagens", "/listaTexto", "/palavrasChaves", "/categoria/**", "/produto/**"};
 	
 	private String[] PUBLIC_POST = {"/autenticacao", "/usuario/cadastrarUsuario", "/email"};
+	
+	private String[] PUBLIC_PUT = {"/produto/click", "/categoria/click"};
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -52,6 +54,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers(HttpMethod.GET ,PUBLIC_GET).permitAll()
 			.antMatchers(HttpMethod.POST, PUBLIC_POST).permitAll()
+			.antMatchers(HttpMethod.PUT, PUBLIC_PUT).permitAll()
 			.anyRequest().authenticated();
 		http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 	}

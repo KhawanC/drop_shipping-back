@@ -2,50 +2,48 @@ package com.br.egypto.drop_shipping.DTO;
 
 import javax.persistence.Column;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.br.CPF;
 
 public class UsuarioLoginDTO {
 
 	@Column(unique = true)
-	@NotNull(message = "Nome não pode ser nulo")
+	@NotBlank(message = "Nome não pode ser nulo")
 	private String nomeCompleto;
 
 	@NotNull(message = "Idade não pode ser nulo")
 	private Integer idade;
 
 	@Column(unique = true)
-	@NotNull(message = "Email não pode ser nulo")
+	@NotBlank(message = "Email não pode ser nulo")
 	@Email(message = "Email deve ser válido")
 	private String email;
 
 	@Column(unique = true)
-	@NotNull(message = "Senha não pode ser nula")
+	@NotBlank(message = "Senha não pode ser nula")
 	private String senha;
 
 	@Column(unique = true)
-	@NotNull(message = "Telefone não pode ser nulo")
+	@NotBlank(message = "Telefone não pode ser nulo")
 	private String telefone;
 
 	@Column(unique = true)
-	@CPF(message = "CPF deve conter pontuação e hífen")
-	@NotNull(message = "CPF não pode ser nulo")
+	@NotBlank(message = "CPF não pode ser nulo")
 	private String cpf;
 
-	@NotNull(message = "CEP não pode ser nulo")
+	@NotBlank(message = "CEP não pode ser nulo")
 	private String cep;
 
-	@NotNull(message = "Estado não pode ser nulo")
+	@NotBlank(message = "Estado não pode ser nulo")
 	private String estado;
 
-	@NotNull(message = "Cidade não pode ser nulo")
+	@NotBlank(message = "Cidade não pode ser nulo")
 	private String cidade;
 
-	@NotNull(message = "Bairro não pode ser nulo")
+	@NotBlank(message = "Bairro não pode ser nulo")
 	private String bairro;
 
-	@NotNull(message = "Rua não pode ser nule")
+	@NotBlank(message = "Rua não pode ser nule")
 	private String rua;
 
 	private Integer numero;
@@ -55,17 +53,17 @@ public class UsuarioLoginDTO {
 	public UsuarioLoginDTO() {
 	}
 
-	public UsuarioLoginDTO(@NotNull(message = "Nome não pode ser nulo") String nomeCompleto,
+	public UsuarioLoginDTO(@NotBlank(message = "Nome não pode ser nulo") String nomeCompleto,
 			@NotNull(message = "Idade não pode ser nulo") Integer idade,
-			@NotNull(message = "Email não pode ser nulo") @Email(message = "Email deve ser válido") String email,
-			@NotNull(message = "Senha não pode ser nula") String senha,
-			@NotNull(message = "Telefone não pode ser nulo") String telefone,
-			@CPF(message = "CPF deve conter pontuação e hífen") @NotNull(message = "CPF não pode ser nulo") String cpf,
-			@NotNull(message = "CEP não pode ser nulo") String cep,
-			@NotNull(message = "Estado não pode ser nulo") String estado,
-			@NotNull(message = "Cidade não pode ser nulo") String cidade,
-			@NotNull(message = "Bairro não pode ser nulo") String bairro,
-			@NotNull(message = "Rua não pode ser nule") String rua, Integer numero, String complemento) {
+			@NotBlank(message = "Email não pode ser nulo") @Email(message = "Email deve ser válido") String email,
+			@NotBlank(message = "Senha não pode ser nula") String senha,
+			@NotBlank(message = "Telefone não pode ser nulo") String telefone,
+			String cpf,
+			@NotBlank(message = "CEP não pode ser nulo") String cep,
+			@NotBlank(message = "Estado não pode ser nulo") String estado,
+			@NotBlank(message = "Cidade não pode ser nulo") String cidade,
+			@NotBlank(message = "Bairro não pode ser nulo") String bairro,
+			@NotBlank(message = "Rua não pode ser nule") String rua, Integer numero, String complemento) {
 		super();
 		this.nomeCompleto = nomeCompleto;
 		this.idade = idade;

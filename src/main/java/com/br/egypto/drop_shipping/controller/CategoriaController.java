@@ -8,11 +8,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.egypto.drop_shipping.DTO.CategoriaDTO;
+import com.br.egypto.drop_shipping.DTO.ClickDTO;
 import com.br.egypto.drop_shipping.entity.Categoria;
 import com.br.egypto.drop_shipping.exceptions.CategoriaException;
 import com.br.egypto.drop_shipping.service.CategoriaService;
@@ -37,5 +39,11 @@ public class CategoriaController {
 	@PostMapping
 	public ResponseEntity<Categoria> saveListaPalavrasChave(@RequestBody CategoriaDTO categoria) {
 		return new ResponseEntity<>(categoriaService.saveCategoria(categoria), HttpStatus.OK);
+	}
+	
+	@PutMapping("/click")
+	public ResponseEntity<String> clickProduto(@RequestBody ClickDTO click) {
+		categoriaService.clickCategoriaProducer(click);
+		return new ResponseEntity<>("Mensagem enviada com sucesso", HttpStatus.OK);
 	}
 }

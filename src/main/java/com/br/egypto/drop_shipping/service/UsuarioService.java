@@ -64,11 +64,11 @@ public class UsuarioService {
 		List<Usuario> usuariosTelefone = usuarioRepository.findByTelefone(usuarioDTO.getTelefone());
 
 		if (!usuariosCPF.isEmpty()) {
-			throw new UsuarioException("Esse CPF já foi registrado");
+			throw new UsuarioException("Houve um problema ao se registrar");
 		} else if (!usuariosEmail.isEmpty()) {
-			throw new UsuarioException("Esse email já foi registrado");
+			throw new UsuarioException("Houve um problema ao se registrar");
 		} else if (!usuariosTelefone.isEmpty()) {
-			throw new UsuarioException("Esse telefone já foi registrado");
+			throw new UsuarioException("Houve um problema ao se registrar");
 		} else {
 			Endereco endereco = enderecoRepository.save(EnderecoDtoToEntity(usuarioDTO));
 			Usuario usuario = UsuarioDtoToEntity(usuarioDTO);
