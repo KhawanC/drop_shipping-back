@@ -27,7 +27,7 @@ public class JWTTokenUtil {
 	
 	public String gerarToken(Usuario usuario) {
 		return Jwts.builder()
-				.setSubject(usuario.getId() + "," + usuario.getEmail())
+				.setSubject(usuario.getId() + "," + usuario.getEmail() + "," + usuario.getNomeCompleto())
 				.setIssuer("kauacassiano")
 				.setIssuedAt(new Date())
 				.setExpiration(new Date(System.currentTimeMillis() + TEMPO_EXPIRACAO))

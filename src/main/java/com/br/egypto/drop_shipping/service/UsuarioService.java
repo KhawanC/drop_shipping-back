@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.br.egypto.drop_shipping.DTO.UsuarioLoginDTO;
+import com.br.egypto.drop_shipping.DTO.UsuarioUpdateSenhaDTO;
 import com.br.egypto.drop_shipping.entity.Endereco;
 import com.br.egypto.drop_shipping.entity.Usuario;
 import com.br.egypto.drop_shipping.exceptions.NoSuchElementFoundException;
@@ -78,6 +79,14 @@ public class UsuarioService {
 
 			return newUsuario;
 		}
+	}
+	
+	public Usuario updateSenhaUsuario(UsuarioUpdateSenhaDTO usuarioDTO) {
+		Usuario usuario = usuarioRepository.findById(usuarioDTO.getId()).get();
+		usuario.setSenha(encoder.encode(usuarioDTO.getSenha()));
+		Usuario newUsuario = usuarioRepository.save(usuario);
+		
+		return newUsuario;
 	}
 
 	public AuthResposta autenticarUsuario(AuthPedido usuarioDTO) throws Exception {

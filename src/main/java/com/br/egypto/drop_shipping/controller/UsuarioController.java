@@ -10,11 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.egypto.drop_shipping.DTO.UsuarioLoginDTO;
+import com.br.egypto.drop_shipping.DTO.UsuarioUpdateSenhaDTO;
 import com.br.egypto.drop_shipping.entity.Usuario;
 import com.br.egypto.drop_shipping.service.UsuarioService;
 
@@ -38,5 +40,10 @@ public class UsuarioController {
 	@PostMapping("/cadastrarUsuario")
 	public ResponseEntity<Usuario> saveUsuario(@RequestBody @Valid UsuarioLoginDTO usuarioDTO) throws Exception {
 		return new ResponseEntity<>(usuarioService.saveUsuario(usuarioDTO), HttpStatus.CREATED);
+	}
+	
+	@PutMapping("/alterarSenha")
+	public ResponseEntity<Usuario> updateSenhaUsuario(@RequestBody UsuarioUpdateSenhaDTO usuarioDTO) {
+		return new ResponseEntity<>(usuarioService.updateSenhaUsuario(usuarioDTO), HttpStatus.OK);
 	}
 }
